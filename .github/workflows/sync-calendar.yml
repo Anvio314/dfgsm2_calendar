@@ -4,7 +4,7 @@ on:
   schedule:
     # Tous les dimanches à 20h00 UTC
     - cron: '0 20 * * 0'
-  workflow_dispatch: # Permet de lancer le scraper manuellement depuis l'onglet Actions
+  workflow_dispatch: # Permet de lancer le scraper manuellement
 
 permissions:
   contents: read
@@ -28,6 +28,8 @@ jobs:
 
       - name: Installer pnpm
         uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
       - name: Configurer Node.js
         uses: actions/setup-node@v4
@@ -38,7 +40,7 @@ jobs:
       - name: Installer les dépendances
         run: pnpm install --frozen-lockfile
 
-      - name: Installer Chromium pour Playwright
+      - name: Installer Chromium et ses dépendances système
         run: pnpm exec playwright install --with-deps chromium
 
       - name: Exécuter le scraping et la génération des ICS
@@ -50,7 +52,7 @@ jobs:
       - name: Configurer GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Téléverser le dossier public comme artefact Pages
+      - name: Téléverser l'artefact Pages
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'public'
