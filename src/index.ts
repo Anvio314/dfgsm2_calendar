@@ -37,9 +37,9 @@ async function run(): Promise<void> {
 
   const currentYear = new Date().getFullYear();
   const repoOwner = process.env.GITHUB_REPOSITORY_OWNER || 'Charles';
-  const repoFullName = process.env.GITHUB_REPOSITORY || 'Charles/dfgsm2-calendar';
+  const repoFullName = process.env.GITHUB_REPOSITORY || 'Charles/dfgsm2_calendar';
   const repoParts = repoFullName.split('/');
-  const repoName = repoParts.length > 1 ? repoParts[1] : 'dfgsm2-calendar';
+  const repoName = repoParts.length > 1 ? repoParts[1] : 'dfgsm2_calendar';
 
   // 1. Flux promo complet
   const promoFeed = await buildIcsFeed(
