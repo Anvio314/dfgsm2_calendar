@@ -31,8 +31,8 @@ jobs:
         with:
           node-version: 22
 
-      - name: Installer pnpm
-        run: npm install -g pnpm
+      - name: Installer pnpm v9
+        run: npm install -g pnpm@9
 
       - name: Installer les dépendances
         run: pnpm install --no-frozen-lockfile
@@ -40,7 +40,7 @@ jobs:
       - name: Installer Chromium et dépendances système
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Exécuter le scraping et génération ICS
+      - name: Exécuter le scraper
         run: pnpm run build:sync
         env:
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
