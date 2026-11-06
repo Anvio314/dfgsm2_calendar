@@ -4,7 +4,7 @@ on:
   schedule:
     # Tous les dimanches à 20h00 UTC
     - cron: '0 20 * * 0'
-  workflow_dispatch: # Permet de lancer le scraper manuellement
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -26,24 +26,21 @@ jobs:
       - name: Récupérer le code
         uses: actions/checkout@v4
 
-      - name: Installer pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
       - name: Configurer Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'pnpm'
+
+      - name: Installer pnpm
+        run: npm install -g pnpm
 
       - name: Installer les dépendances
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
 
-      - name: Installer Chromium et ses dépendances système
+      - name: Installer Chromium et dépendances système
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Exécuter le scraping et la génération des ICS
+      - name: Exécuter le scraping et génération ICS
         run: pnpm run build:sync
         env:
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
